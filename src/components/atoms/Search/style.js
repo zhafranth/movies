@@ -48,4 +48,9 @@ export const BtnSearch = styled.button`
   &:active {
     background-color: #43ca8d;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #24895c;
+  }
 `;

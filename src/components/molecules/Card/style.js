@@ -9,6 +9,7 @@ export const MainCard = styled.div`
   box-shadow: 0 1.8rem 2rem rgba(0, 0, 0, 0.4);
   overflow: hidden;
   transition: all 0.3s;
+  margin-bottom: 3rem;
 
   &:hover {
     cursor: pointer;

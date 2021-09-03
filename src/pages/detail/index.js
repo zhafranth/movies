@@ -1,5 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailMovie } from "../../store/action";
 
 // Child components
 import {
@@ -15,14 +17,66 @@ import {
   InfoDetail,
   Plot,
   BgImage,
+  Modals,
 } from "./style";
 
-// Images
-import DummyCover from "../../assets/images/dummy-cover-big.png";
+// Components
+import { Loading } from "../../components";
+// // Images
+// import DummyCover from "../../assets/images/dummy-cover-big.png";
 
 const Detail = () => {
+  const dispatch = useDispatch();
+  const { slug } = useParams();
+  const [showModal, setShowModal] = useState(false);
+
+  const { detailMovie } = useSelector((state) => state.movieReducer);
+  const { loading } = useSelector((state) => state.globalReducer);
+
+  useEffect(() => {
+    dispatch(getDetailMovie(slug));
+  }, [dispatch, slug]);
+
+  if (loading) {
+    return (
+      <MainDetail>
+        <Header>
+          <Link to="/">
+            Movie <span>Database</span>
+          </Link>
+        </Header>
+        <Content>
+          <ImgWrapper>
+            <Loading width="100%" height="40rem" />
+          </ImgWrapper>
+          <InfoMovie>
+            <Loading width="80%" height="4rem" />
+            <Loading width="70%" height="2rem" />
+            <Loading width="100%" height="9rem" />
+            <InfoDetail>
+              <Loading width="8rem" height="2rem" />
+              <Loading width="25rem" height="2rem" />
+            </InfoDetail>
+            <InfoDetail>
+              <Loading width="8rem" height="2rem" />
+              <Loading width="25rem" height="2rem" />
+            </InfoDetail>
+            <InfoDetail>
+              <Loading width="8rem" height="2rem" />
+              <Loading width="25rem" height="2rem" />
+            </InfoDetail>
+          </InfoMovie>
+        </Content>
+      </MainDetail>
+    );
+  }
   return (
     <MainDetail>
+      {showModal && (
+        <Modals onClick={() => setShowModal(false)}>
+          <img src={detailMovie?.Poster} alt="Poster view detail" />
+        </Modals>
+      )}
       <Header>
         <Link to="/">
           Movie <span>Database</span>
@@ -30,54 +84,48 @@ const Detail = () => {
       </Header>
       <BgImage>
         <div className="white-gradient"></div>
-        <img src={DummyCover} alt="background blur cover" />
+        <img src={detailMovie?.Poster} alt="background blur cover" />
       </BgImage>
       <Content>
-        <ImgWrapper>
-          <ImgCover src={DummyCover} alt="cover poster" />
+        <ImgWrapper onClick={() => setShowModal(true)}>
+          <ImgCover src={detailMovie?.Poster} alt={detailMovie?.Title} />
         </ImgWrapper>
         <InfoMovie>
-          <Title>Batman Returns</Title>
-          <Rate>
-            <p>4.6/10</p>
-          </Rate>
+          <Title>{detailMovie?.Title}</Title>
+          <Rate>{/* <p>{detailMovie?.Ratings[0]?.value}</p> */}</Rate>
           <SubInfo>
             <div className="subinfo-item">
               <p>Runtime</p>
-              <h4>126 min</h4>
+              <h4>{detailMovie?.Runtime}</h4>
             </div>
             <div className="subinfo-item">
               <p>Released</p>
-              <h4>23 Jun 1989</h4>
+              <h4>{detailMovie?.Released}</h4>
             </div>
             <div className="subinfo-item">
               <p>Genre</p>
-              <h4>Action, Adventure</h4>
+              <h4>{detailMovie?.Genre}</h4>
             </div>
           </SubInfo>
           <Plot>
             <h4>Plot</h4>
-            <p>
-              The Dark Knight of Gotham City begins his war on crime with his
-              first major enemy being Jack Napier, a criminal who becomes the
-              clownishly homicidal Joker.
-            </p>
+            <p>{detailMovie?.Plot}</p>
           </Plot>
           <InfoDetail>
             <h4>Director</h4>
-            <p>Director</p>
+            <p>{detailMovie?.Director}</p>
           </InfoDetail>
           <InfoDetail>
             <h4>Writter</h4>
-            <p>Writter</p>
+            <p>{detailMovie?.Writer}</p>
           </InfoDetail>
           <InfoDetail>
             <h4>Actors</h4>
-            <p>Actors</p>
+            <p>{detailMovie?.Actors}</p>
           </InfoDetail>
           <InfoDetail>
             <h4>Country</h4>
-            <p>Country</p>
+            <p>{detailMovie?.Country}</p>
           </InfoDetail>
         </InfoMovie>
       </Content>

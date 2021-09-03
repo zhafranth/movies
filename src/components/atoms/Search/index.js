@@ -1,7 +1,8 @@
 import React from "react";
 
 // Depen
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import SyncLoader from "react-spinners/SyncLoader";
 
 // Child Components
 import { MainInput, Input, BtnSearch } from "./style";
@@ -15,12 +16,13 @@ import { ImSearch } from "react-icons/im";
 
 const Search = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.globalReducer);
   const [form, handleChange] = useForm({
     search: "",
   });
 
   const onSearch = () => {
-    dispatch(getListMovie(form.search));
+    dispatch(getListMovie(form.search, 1));
   };
   return (
     <MainInput>
@@ -29,9 +31,14 @@ const Search = () => {
         placeholder="batman"
         value={form.search}
         onChange={(e) => handleChange("search", e.target.value)}
+        data-testid="search"
       />
-      <BtnSearch onClick={onSearch}>
-        <ImSearch />
+      <BtnSearch onClick={onSearch} disabled={loading}>
+        {loading ? (
+          <SyncLoader color="#fff" loading={true} size={8} />
+        ) : (
+          <ImSearch />
+        )}
       </BtnSearch>
     </MainInput>
   );

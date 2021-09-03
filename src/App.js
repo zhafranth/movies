@@ -1,5 +1,10 @@
 import { lazy, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  BrowserRouter,
+} from "react-router-dom";
 
 // Components
 import { LoadingPage } from "./components";
@@ -10,12 +15,14 @@ const Detail = lazy(() => import("./pages/detail"));
 
 function App() {
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Switch>
-        <Route path="/" component={Home} exact />
-        <Route path="/movie/:slug" component={Detail} />
-      </Switch>
-    </Suspense>
+    <Router>
+      <Suspense fallback={<LoadingPage />}>
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/movie/:slug" component={Detail} />
+        </Switch>
+      </Suspense>
+    </Router>
   );
 }
 

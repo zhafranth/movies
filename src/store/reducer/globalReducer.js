@@ -3,7 +3,7 @@ const initialState = {
 };
 
 export const globalReducer = (state = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case "SET_LOADING":
       return { ...state, loading: action.payload };
 

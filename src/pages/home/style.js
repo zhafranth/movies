@@ -27,6 +27,6 @@ export const ListCard = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: space-between;
+  justify-content: space-space-around;
 `;
 export const Card = styled.div``;

@@ -23,6 +23,7 @@ export const Header = styled.div`
   }
 `;
 export const Content = styled.div`
+  position: relative;
   height: calc(100vh - 8rem);
   position: relative;
   display: flex;
@@ -34,6 +35,12 @@ export const Content = styled.div`
 `;
 export const ImgWrapper = styled.div`
   width: 33.5rem;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(0.96);
+  }
 `;
 export const ImgCover = styled.img`
   width: 100%;
@@ -107,5 +114,23 @@ export const BgImage = styled.div`
     width: 100%;
     background-position: bottom;
     background-size: cover;
+  }
+`;
+
+export const Modals = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  img {
+    height: 90vh;
   }
 `;

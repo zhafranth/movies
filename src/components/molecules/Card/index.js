@@ -5,16 +5,17 @@ import { useHistory } from "react-router-dom";
 import { MainCard, ImgCard, InfoCard } from "./style";
 
 // Images
-import DummyCover from "../../../assets/images/dummy-cover-card.png";
+// import DummyCover from "../../../assets/images/dummy-cover-card.png";
 
-const Card = () => {
+const Card = ({ data }) => {
+  const { Poster, Title, Year, imdbID } = data;
   const history = useHistory();
   return (
-    <MainCard onClick={() => history.push("/movie/batman")}>
-      <ImgCard src={DummyCover} alt="cover card" />
+    <MainCard onClick={() => history.push(`/movie/${imdbID}`)}>
+      <ImgCard src={Poster} alt="cover card" />
       <InfoCard className="info-card">
-        <h3>Batman Returns</h3>
-        <p>2007</p>
+        <h3>{Title}</h3>
+        <p>{Year}</p>
       </InfoCard>
     </MainCard>
   );
